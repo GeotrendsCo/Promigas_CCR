@@ -1,0 +1,52 @@
+{
+    "ruido": {
+        "control_turbocompreso_barrera": {
+            "name": "C Turbocompresor-Barrera",
+            "popupTemplate": "<strong>Nivel de Presión Sonra</strong><br><br><strong>LAeq [dB]:</strong> {isovalue}"
+        },
+        "lineabase_1": {
+            "name": "Linea Base",
+            "popupTemplate": "<strong>Nivel de Presión Sonra</strong><br><br><strong>LAeq [dB]:</strong> {ISOVALUE} dBA"
+        },
+        "controltotal": {
+            "name": "Control total",
+            "popupTemplate": "<strong>Nivel de Presión Sonra</strong><br><br><strong>LAeq [dB]:</strong> {isovalue} dBA"
+        },
+        "control_microturbinas": {
+            "name": "C Microturbina",
+            "popupTemplate": "<strong>Nivel de Presión Sonra</strong><br><br><strong>LAeq [dB]:</strong> {isovalue} dBA"
+        },
+        "control_total_tuberias_chaqueta": {
+            "name": "C T Tuberías Chaquetas",
+            "popupTemplate": "<strong>Nivel de Presión Sonra</strong><br><br><strong>LAeq [dB]:</strong> {isovalue} dBA"
+        },
+        "cont_tub_cha": {
+            "name": "C Tuberás Chaquetas",
+            "popupTemplate": "<strong>Nivel de Presión Sonra</strong><br><br><strong>LAeq [dB]:</strong> {isovalue} dBA"
+        },
+        "control_t_tub_chaque_turbo_b_barrera_14cm": {
+            "name": "C T barrerá 14com",
+            "popupTemplate": "<strong>Nivel de Presión Sonra</strong><br><br><strong>LAeq [dB]:</strong> {isovalue} dBA"
+        }
+        
+    },
+    "mediciones": {
+        "ambiental": {
+            "name": "Ruido Ambiental",
+        "popupTemplate": "<img src=\"/images/{Foto}.jpg\" class=\"popup-img\"><br><div class=\"popup-content\"><strong>Punto:</strong> {Punto}<br><table class=\"popup-table\"><tr><th>Día On</th><th>Día Off</th><th>Noche On</th><th>Noche Off</th></tr><tr><td>{DOn} dB</td><td>{DOff} dB</td><td>{NOn} dB</td><td>{NOff} dB</td></tr></table><strong>Coordenadas:</strong> {Norte}, {Oeste}<br></div>",
+        "iconUrl": "/icons/red-icon.png"
+        },
+        "emision": {
+            "name": "Ruido Emisión",
+            "popupTemplate": "<img src=\"/images/{Foto}.jpg\" class=\"popup-img\"><div class=\"popup-content\"><br><strong>Punto:</strong> {Punto}<br><table class=\"popup-table\"><tr><th>Día On</th><th>Día Off</th><th>Noche On</th><th>Noche Off</th></tr><tr><td>{DOn} dB</td><td>{DOff} dB</td><td>{NOn} dB</td><td>{NOff} dB</td></tr></table><strong>Coordenadas:</strong> {Norte}, {Oeste}<br></div>",
+        "iconUrl": "/icons/red-icon.png"
+        }
+    },
+    "controles": {
+        "fcontroles": {
+            "name": "Contol de ruido",
+        "popupTemplate": "<img src=\"/images/{foto}\" class=\"popup-img\"><br><div class=\"popup-content\"><strong>Descripción: </strong>{descr}</div>",
+        "iconUrl": "/icons/red-icon.png"
+        }
+    }
+}

@@ -1,0 +1,245 @@
+body {
+    padding: 20px;
+}
+#right-sidebar {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+#layers-list {
+    padding: 15px;
+    height: 100vh;
+    overflow-y: auto; /* Asegura que el contenido sea desplazable si es más grande que el contenedor */
+}
+#layers-list2 {
+    padding: 15px;
+    height: 100vh;
+    overflow-y: auto; /* Asegura que el contenido sea desplazable si es más grande que el contenedor */
+}
+
+#map-container {
+    height: 100vh; /* Asegura que el contenedor del mapa ocupe toda la altura disponible */
+    padding: 30px;
+}
+
+#map-wrapper {
+    height: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
+}
+
+#map {
+    width: 100%;
+    height: 100%; /* Asegura que el mapa ocupe toda la altura del contenedor */
+    border-radius: 10px;
+}
+
+#layersButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1000; /* Asegura que el botón esté por encima del mapa */
+}
+.layer-item, .layer-item2, .layer-item3 {
+    cursor: pointer;
+}
+
+.layer-item.active-layer,
+.layer-item2.active-layer,
+.layer-item3.active-layer {
+    background-color: rgba(255, 0, 0, 0.5); /* Rojo semitransparente */
+    color: white;
+}
+#colorBar{
+    position: absolute;
+    bottom: 4em;
+    right:2em;
+    width: auto;
+    height: auto;
+    max-width: 150px;
+    background-color: rgba(255, 255, 255, 0.877);
+    z-index: 9999;
+    border-radius: 1em;
+    padding: 1em;
+    font-size: small;
+    text-align: center;
+}
+.colorSingleSquare {
+    width: 14px;
+    height: 14px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.7;
+}
+
+/* Estilos generales para los popups */
+/* Estilos generales para los popups */
+.leaflet-popup-content-wrapper {
+    padding: 0px;
+    font-size: 14px;
+    line-height: 1.4;
+    width: 400px;
+}
+
+.leaflet-popup-content {
+    margin: 0px !important;
+    line-height: 1.4 !important;
+    width: 400px !important;
+}
+
+/* Estilos personalizados para los popups de Mapas de Ruido */
+.popup-ruido .leaflet-popup-content-wrapper {
+    background: rgba(255, 255, 255, 0.8); /* Fondo rojo semitransparente */
+    color: rgb(0, 0, 0); /* Texto blanco */
+    border-radius: 5px;
+    width: 200px !important;
+    padding: 25px;
+}
+
+.popup-ruido .leaflet-popup-tip {
+    background: rgba(252, 252, 252, 0.8); /* Punta del popup rojo semitransparente */
+}
+
+/* Estilos personalizados para los popups de Mediciones */
+.popup-mediciones .leaflet-popup-content-wrapper {
+    background: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente */
+    color: rgb(0, 0, 0); /* Texto negro */
+    border-radius: 5px;
+}
+
+.popup-mediciones .leaflet-popup-tip {
+    background: rgba(255, 255, 255, 0.8); /* Punta del popup azul semitransparente */
+}
+
+/* Estilos para el popup */
+.popup-img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.popup-content {
+    text-align: center;
+    padding: 20px;
+}
+
+.popup-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.popup-table th, .popup-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.popup-table th {
+    background-color: #f2f2f2;
+}
+
+.list-group-item {
+    cursor: pointer;
+}
+
+.imgpotencia{
+    width: 100%;
+background-color: #ffffffc5;
+border-radius: 10px;
+}
+.list-group-item.active-case {
+    background-color: rgba(255, 0, 0, 0.5); /* Rojo semitransparente */
+    color: white;
+}
+
+.image-comparison-container {
+    position: relative;
+    width: 95%;
+    height: auto; /* Ajusta la altura automáticamente según las proporciones de la imagen */
+    border-radius: 20px;
+    overflow: hidden;
+    border: 5px solid white; /* Borde blanco */
+    margin: 20px;
+}
+
+.image-comparison-wrapper {
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+.comparison-image {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    user-select: none; /* Evita la selección de la imagen */
+}
+
+.comparison-slider {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 5px;
+    height: 100%;
+    background: #fff;
+    cursor: ew-resize;
+    z-index: 2;
+    transform: translateX(-50%);
+    user-select: none; /* Evita la selección del slider */
+}
+
+.comparison-slider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    user-select: none; /* Evita la selección del slider */
+    padding: 10px;
+}
+
+.table-bordered {
+    width: 100%;
+    border: 1px solid #dee2e6;
+    margin-bottom: 0;
+}
+
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid #dee2e6;
+    padding: 2px; /* Reducir el padding para disminuir el interlineado */
+    text-align: center;
+}
+
+.table-bordered th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.pnlm-container {
+    padding: 10px;
+    width: 100%;
+    height: 600px !important;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+
+#panorama {
+    width: 95%;
+    height: 600px;
+    position: relative;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #000; /* Fondo negro para mejorar la visualización */
+}
