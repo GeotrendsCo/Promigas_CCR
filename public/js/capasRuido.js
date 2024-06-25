@@ -1,6 +1,5 @@
-// capasRuido.js
-
 let layersConfig = {}; // Variable para almacenar la configuración de capas
+let ortofotoLayer; // Variable para almacenar la capa de ortofoto
 
 // Función para cargar el JSON de configuración de capas
 function loadLayersConfig() {
@@ -24,7 +23,7 @@ function getLayerName(type, layer) {
     if (layersConfig[type] && layersConfig[type][layer]) {
         return layersConfig[type][layer].name || layer;
     }
-    return layer;
+    return layer || 'undefined';
 }
 
 // Función para obtener el contenido del popup personalizado de una capa
@@ -47,6 +46,7 @@ function getPopupContent(type, layer, properties) {
     return content;
 }
 
+// Función para obtener el color basado en el valor
 function getColor(d) {
     return d >= 80 ? '#000078' :
         d >= 75 ? '#00c5ff' :
@@ -61,6 +61,7 @@ function getColor(d) {
                                             'transparent';
 }
 
+// Función para configurar la barra de color
 function setColorBar(divId) {
     var div = document.getElementById(divId);
     const grades = [0, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80];
@@ -74,9 +75,20 @@ function setColorBar(divId) {
 
 setColorBar("colorBar");
 
+// Inicializar la capa de ortofoto
+// function initializeOrtofotoLayer() {
+//     ortofotoLayer = L.tileLayer('../output/tiles/{z}/{x}/{y}.png', {
+//         maxZoom: 22,
+//         attribution: 'Tu Atribución',
+//         tms: true,
+//         opacity: 1 // Ajustar la opacidad de la capa de ortofoto
+//     });
+// }
+
 // Cargar la configuración de capas antes de inicializar el contenido
 document.addEventListener('DOMContentLoaded', () => {
     loadLayersConfig().then(() => {
+        //initializeOrtofotoLayer();
         fetch('/api/layers')
             .then(response => response.json())
             .then(layers => {
@@ -157,6 +169,9 @@ function selectLayer(layer) {
     const selectedItem = [...layerItems].find(item => item.textContent === getLayerName('ruido', layer));
     selectedItem.classList.add('active-layer');
 
+    // Desactivar todas las capas de superposición
+    disableAllOverlays();
+
     // Obtener y desplegar los polígonos en el mapa
     fetch(`/api/polygons/${layer}`)
         .then(response => response.json())
@@ -167,6 +182,7 @@ function selectLayer(layer) {
             console.error('Error fetching polygons:', error);
         });
 }
+
 
 function toggleLayer2(layer, layerItem) {
     if (layerItem.classList.contains('active-layer')) {
@@ -180,6 +196,7 @@ function toggleLayer2(layer, layerItem) {
             .then(response => response.json())
             .then(geojson => {
                 displayPolygons2(geojson, 'mediciones', layer);
+                bringShpBaseLayersToFront(); // Traer las capas shp_base al frente después de activar una nueva capa
             })
             .catch(error => {
                 console.error('Error fetching polygons:', error);
@@ -199,6 +216,7 @@ function toggleLayer3(layer, layerItem) {
             .then(response => response.json())
             .then(geojson => {
                 displayPolygons3(geojson, 'controles', layer);
+                bringShpBaseLayersToFront(); // Traer las capas shp_base al frente después de activar una nueva capa
             })
             .catch(error => {
                 console.error('Error fetching polygons:', error);
@@ -274,6 +292,11 @@ function addNewLayer(geojson, type, layerName) {
         }
     }).addTo(map);
 
+    // // Añadir la capa de ortofoto con transparencia
+    // if (!map.hasLayer(ortofotoLayer)) {
+    //     ortofotoLayer.addTo(map);
+    // }
+
     let opacity = 0;
     const fadeDuration = 500; // Duración total de la transición en milisegundos
     const fadeSteps = 10; // Número de pasos en la transición
@@ -284,12 +307,16 @@ function addNewLayer(geojson, type, layerName) {
         opacity += fadeOpacityStep;
         if (opacity >= 0.7) {
             clearInterval(interval);
+            // Reactivar todas las capas de superposición una vez que la nueva capa esté completamente desplegada
+            enableAllOverlays();
         } else {
             window.geoJsonLayer.eachLayer(layer => {
                 layer.setStyle({ opacity: opacity, fillOpacity: opacity });
             });
         }
     }, fadeInterval);
+
+    bringShpBaseLayersToFront(); // Asegurarse de que las capas shp_base se traigan al frente después de agregar una nueva capa
 }
 
 function addMeasurementLayer(geojson, type, layerName) {
@@ -318,6 +345,8 @@ function addMeasurementLayer(geojson, type, layerName) {
         window.measurementLayers = {};
     }
     window.measurementLayers[layerName] = measurementLayer;
+
+    bringShpBaseLayersToFront(); // Asegurarse de que las capas shp_base se traigan al frente después de agregar una nueva capa
 }
 
 function removeMeasurementLayer(layerName) {
@@ -325,6 +354,15 @@ function removeMeasurementLayer(layerName) {
         map.removeLayer(window.measurementLayers[layerName]);
         delete window.measurementLayers[layerName];
     }
+}
+
+// Función para traer al frente las capas de shp_base
+function bringShpBaseLayersToFront() {
+    Object.keys(overlayLayers).forEach(layerName => {
+        if (layersConfig.shp_base && layersConfig.shp_base[layerName]) {
+            overlayLayers[layerName].bringToFront();
+        }
+    });
 }
 
 // Función para obtener el icono personalizado de una capa
@@ -335,8 +373,8 @@ function getLayerIcon(type, layer) {
             shadowUrl: layersConfig[type][layer].shadowUrl,
             iconSize: [41, 41], // Ajusta el tamaño del icono según sea necesario
             shadowSize: [41, 41], // Ajusta el tamaño de la sombra según sea necesario
-            iconAnchor: [41, 41], // Ajusta el ancla del icono según sea necesario
-            shadowAnchor: [41, 41], // Ajusta el ancla de la sombra según sea necesario
+            iconAnchor: [20, 41], // Ajusta el ancla del icono según sea necesario
+            shadowAnchor: [20, 41], // Ajusta el ancla de la sombra según sea necesario
             popupAnchor: [1, -34] // Ajusta el ancla del popup según sea necesario
         });
     }

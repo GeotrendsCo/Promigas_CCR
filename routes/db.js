@@ -161,4 +161,40 @@ router.get('/polygonsF/:layer', async (req, res) => {
   }
 });
 
+router.get('/layersShpBase', async (req, res) => {
+  try {
+    const client = await pool.connect();
+    const query = `
+      SELECT table_name
+      FROM information_schema.tables
+      WHERE table_schema = 'shp_base';
+    `;
+
+    const result = await client.query(query);
+    client.release();
+
+    const layers = result.rows.map(row => row.table_name);
+    res.json(layers);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+router.get('/polygonsShpBase/:layer', async (req, res) => {
+  const layer = req.params.layer;
+  try {
+      const result = await pool.query(`SELECT ST_AsGeoJSON(geom) as geometry, * FROM shp_base.${layer}`);
+      const features = result.rows.map(row => ({
+          type: 'Feature',
+          geometry: JSON.parse(row.geometry),
+          properties: row,
+      }));
+      res.json({ type: 'FeatureCollection', features });
+  } catch (error) {
+      console.error('Error fetching polygons:', error);
+      res.status(500).json({ error: 'Error fetching polygons' });
+  }
+});
+
 module.exports = router;
