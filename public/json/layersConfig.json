@@ -1,12 +1,12 @@
 {
     "ruido": {
         "control_turbocompreso_barrera": {
-            "name": "C Turbocompresor-Barrera",
+            "name": "Control Turbocompresor",
             "popupTemplate": "<strong>Nivel de Presión Sonra</strong><br><br><strong>LAeq [dB]:</strong> {isovalue}",
             "index": 99
         },
         "lineabase_1": {
-            "name": "Linea Base",
+            "name": "Regulación",
             "popupTemplate": "<strong>Nivel de Presión Sonra</strong><br><br><strong>LAeq [dB]:</strong> {ISOVALUE} dBA",
             "index": 99
         },
@@ -16,7 +16,7 @@
             "index": 99
         },
         "control_microturbinas": {
-            "name": "C Microturbina",
+            "name": "Control Microturbina",
             "popupTemplate": "<strong>Nivel de Presión Sonra</strong><br><br><strong>LAeq [dB]:</strong> {isovalue} dBA",
             "index": 99
         },
@@ -26,7 +26,7 @@
             "index": 99
         },
         "cont_tub_cha": {
-            "name": "C Tuberás Chaquetas",
+            "name": "Control Regulación",
             "popupTemplate": "<strong>Nivel de Presión Sonra</strong><br><br><strong>LAeq [dB]:</strong> {isovalue} dBA",
             "index": 99
         },
@@ -52,7 +52,7 @@
     },
     "controles": {
         "fcontroles": {
-            "name": "Contol de ruido",
+            "name": "Control de ruido",
             "popupTemplate": "<img src=\"/images/{foto}\" class=\"popup-img\"><br><div class=\"popup-content\"><strong>Descripción: </strong>{descr}</div>",
             "iconUrl": "/icons/red-icon.png",
             "index": 3
